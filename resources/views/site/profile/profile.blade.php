@@ -6,7 +6,9 @@
 
 <h1>Meu Perfil</h1>
 
-<form method="POST" action="{{ route('profile.update') }}">
+@include('admin.includes.alerts')
+
+<form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
     {!! csrf_field() !!}
     <div class="form-group">
         <label for="nome">Nome</label>
@@ -19,6 +21,9 @@
     <div class="form-group">
         <label for="password">Senha</label>
         <input type="password" name="password" class="form-control" placeholder="Senha">
+    </div>
+    <div class="form-group">
+        <img src="{{ asset('storage/users/' . auth()->user()->image) }}" alt="{{ auth()->user()->name }}" class="img" width="200">
     </div>
     <div class="form-group">
         <label for="imagem">Imagem</label>

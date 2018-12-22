@@ -7,14 +7,16 @@
 
     <ol class="breadcrumb">
         <li><a href="">Dashboard</a></li>
-        <li><a href="">Saldo</a></li>
+        <li><a href="">Histórico</a></li>
     </ol>
 @stop
 
 @section('content')
     <div class="box">
         <div class="box-header">
-            <form action="" method="POST" class="form form-inline">
+
+            <form action="{{ route('admin.historic.search') }}" method="POST" class="form form-inline">
+                {!! csrf_field() !!}
                 <input type="text" name="id" class="form-control" placeholder="ID">
                 <input type="date" name="date" class="form-control">
                 <select name="type" class="form-control">
@@ -33,6 +35,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Nome</th>
                         <th>Data</th>
                         <th>Valor</th>
                         <th>Tipo</th>
@@ -43,6 +46,7 @@
                     @forelse($historics as $historic)
                     <tr>
                         <td>{{ $historic->id }}</td>
+                        <td>{{ $historic->user->name }}</td>
                         <td>{{ $historic->date }}</td>
                         <td>R$ {{ number_format($historic->amount, 2, ',', '.') }}</td>
                         <td>{{ $historic->type($historic->type) }}</td>
@@ -60,7 +64,11 @@
                 </tbody>
             </table>
 
-            {!! $historics->links() !!}
+            @if (isset($dataForm))
+                {!! $historics->appends($dataForm)->links() !!}
+            @else
+                {!! $historics->links() !!}
+            @endif
 
         </div>
     </div>

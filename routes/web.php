@@ -14,13 +14,14 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Admin', 'prefix' => 'adm
     Route::post('balance/transfer-store', 'BalanceController@transferStore')->name('balance.transfer.store');
 
     Route::get('historic', 'BalanceController@historic')->name('admin.historic');
+    Route::any('historic-search', 'BalanceController@searchHistoric')->name('admin.historic.search');
 
 
 });
 
 Route::get('/', 'Site\SiteController@index')->name('home');
 
-Route::get('profile', 'Admin\UserController@profile')->name('profile')->middleware('auth');
+Route::get('meu-perfil', 'Admin\UserController@profile')->name('profile')->middleware('auth');
 Route::post('profile', 'Admin\UserController@profileUpdate')->name('profile.update')->middleware('auth');
 
 Auth::routes();
